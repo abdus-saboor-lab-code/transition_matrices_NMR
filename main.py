@@ -25,13 +25,15 @@ def worker_matrix_compilier():
         transitions = []
         newsyllable = 0
         count = 0
-        
+        #Establishes the first new syllable. 
         for row in syllablereader: 
             if count > 0:
                 newsyllable = int(row[6])
                 break
             count += 1
-                
+        ### Loops through each row in the CSV file and if the mole rat is a worker, either female or male, 
+        ### and adds each new syllable attributed to that rat to a syllable array. If a new syllable is encountered
+        ### the previous syllable and new syllable are tupled to denote a transition and then appeneded to a transiton array   
         for row in syllablereader:  
             if "baseline OF" in row[0]: 
                 if int(row[6]) != newsyllable and int(row[6]) in MAIN_SYLLABLES:
@@ -40,7 +42,8 @@ def worker_matrix_compilier():
                     transitions.append((newsyllable, int(row[6])))
                     newsyllable = int(row[6])
         
-        ### Organizing function: prototype 
+        ### Organizing function: determines whether the syllables were analyzed in the order 
+        ### in which they appear in MAIN_SYLLABLES, if not then adjust order.
         '''
         def organizer_for_axis(): 
             count = 0
@@ -60,7 +63,8 @@ def worker_matrix_compilier():
                 
             
         syllables = MAIN_SYLLABLES   
-         
+        ### takes an input syllable x and establishes at which index that syllable should appear in 
+        ### the transition matrix.
         def y_holder(x): 
             count = 0
             for i in syllables: 
@@ -70,7 +74,10 @@ def worker_matrix_compilier():
         
         transitions_array = np.zeros((len(syllables), len(syllables)), dtype=float)
         count0 = 0
-             
+        ### Loops through syllables and then for each syllable through the transition array and counts 
+        ### the amount of times each transition is made, incrementing the value in the corresponding box 
+        ### in the matrix. When the row is finished, each value in the row is divided by the total number of 
+        ### times the syllable was seen.
         for p in syllables: 
             total = 0.0
             for q in transitions: 
