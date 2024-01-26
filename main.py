@@ -108,7 +108,7 @@ def queen_matrix_compilier():
             count += 1
                 
         for row in syllablereader:  
-            if "Queen" in row[0] or 'queen' in row[0] and "+" not in row[0]:
+            if "070-630-786" in row[0]:
                 if int(row[6]) != newsyllable and int(row[6]) in MAIN_SYLLABLES:
                     if int(row[6]) not in syllables:
                         syllables.append(int(row[6])) 
